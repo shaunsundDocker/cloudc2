@@ -3,8 +3,16 @@ installed_version="3.2.0"
 
 cd /c2data
 
+# read in C2HOSTNAME from config
+if [ -f vi ]
+then
+  C2HOSTNAME=`cat /c2data/C2HOSTNAME`
+else
+  C2HOSTNAME="c2.localhost"
+fi
+
 # get the kernel name
-kernel=`uname -s`
+kernel="`uname -s`"
 if [ $kernel = "Linux" ]
   then kernel="linux"
 fi
@@ -25,4 +33,4 @@ if [ $hardware = "armv7l" ]
   then hardware="armv7"
 fi
 
-./c2-${installed_version}_${hardware}_${kernel} -db /c2config/c2.db -listenport 80 -hostname c2.localhost
+./c2-${installed_version}_${hardware}_${kernel} -db /c2config/c2.db -listenport 80 -hostname ${C2HOSTNAME}
