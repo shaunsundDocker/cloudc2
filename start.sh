@@ -11,6 +11,13 @@ else
   C2HOSTNAME="c2.localhost"
 fi
 
+if [ -f /c2config/C2PORT ]
+then
+  C2PORT=`cat /c2config/C2PORT`
+else
+  C2PORT="80"
+fi
+
 # get the kernel name
 kernel="`uname -s`"
 if [ $kernel = "Linux" ]
@@ -33,4 +40,4 @@ if [ $hardware = "armv7l" ]
   then hardware="armv7"
 fi
 
-./c2-${installed_version}_${hardware}_${kernel} -db /c2config/c2.db -listenport 80 -hostname ${C2HOSTNAME}
+./c2-${installed_version}_${hardware}_${kernel} -db /c2config/c2.db -listenport ${C2PORT} -hostname ${C2HOSTNAME}
