@@ -4,9 +4,9 @@ installed_version="3.2.0"
 cd /c2data
 
 # read in C2HOSTNAME from config
-if [ -f vi ]
+if [ -f /c2config/C2HOSTNAME ]
 then
-  C2HOSTNAME=`cat /c2data/C2HOSTNAME`
+  C2HOSTNAME=`cat /c2config/C2HOSTNAME`
 else
   C2HOSTNAME="c2.localhost"
 fi
