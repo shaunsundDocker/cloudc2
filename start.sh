@@ -3,6 +3,14 @@ installed_version="3.2.0"
 
 cd /c2data
 
+# read in HTTPS from env
+if [ ${HTTPS} = "true" ]
+then
+  HTTPS="-https"
+else
+  HTTPS=""
+fi
+
 # read in C2HOSTNAME from config
 if [ -f /c2config/C2HOSTNAME ]
 then
@@ -15,7 +23,12 @@ if [ -f /c2config/C2PORT ]
 then
   C2PORT=`cat /c2config/C2PORT`
 else
-  C2PORT="80"
+  if [ ${HTTPS} = "true" ]
+  then
+    C2PORT="443"
+  else
+    C2PORT="80"
+  fi
 fi
 
 # get the kernel name
@@ -40,4 +53,4 @@ if [ $hardware = "armv7l" ]
   then hardware="armv7"
 fi
 
-./c2-${installed_version}_${hardware}_${kernel} -db /c2config/c2.db -listenport ${C2PORT} -hostname ${C2HOSTNAME}
+./c2-${installed_version}_${hardware}_${kernel} -db /c2config/c2.db -listenport ${C2PORT} -hostname ${C2HOSTNAME} ${HTTPS}
